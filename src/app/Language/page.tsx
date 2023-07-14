@@ -1,3 +1,16 @@
+import { getLanguages, getPopularMovieData } from '@/utils/DataFetch';
+import LanguageDropdown from '../components/LanguageDropdown';
+import React from 'react';
+import { checkIfLanguageHasMovies } from '@/utils/Utils';
+
 export default async function Page() {
-  return <h1>Browse By Language Page</h1>;
+  const languages = await getLanguages();
+  const movies = await getPopularMovieData(); //can i get language passed here from LanguageDropdown?
+  const languagesWithMovies = checkIfLanguageHasMovies(languages, movies.results); //only returns en and spanish as only one page of movie data is returned, really should have lanugage passed in
+  return (
+    <>
+      <h1>Browse By Language Page</h1>
+      <LanguageDropdown movies={movies} languages={languagesWithMovies} />
+    </>
+  );
 }

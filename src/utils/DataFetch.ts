@@ -7,6 +7,13 @@ export async function getPopularMovieData() {
   return data;
 }
 
+export async function searchMovies(movieName: string) {
+  const data = await api<MovieResponse>(
+    `https://api.themoviedb.org/3/search/movie?query=${movieName}&include_adult=false&page=1`
+  );
+  return data;
+}
+
 export async function getTopRatedMovieData() {
   const data = await api<MovieResponse>(
     'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1'
@@ -35,6 +42,11 @@ export async function getMovieGenres() {
 
 export async function getTVSeriesGenres() {
   const data = await api<GenreList>('https://api.themoviedb.org/3/genre/tv/list?language=en');
+  return data;
+}
+
+export async function getLanguages() {
+  const data = await api<Language[]>('https://api.themoviedb.org/3/configuration/languages');
   return data;
 }
 

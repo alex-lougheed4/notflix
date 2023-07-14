@@ -8,14 +8,14 @@ export default async function Page() {
 
   return (
     <>
-      <h3>Popular Movies</h3>
-      <div className="flex gap-y-5 overflow-scroll	">
+      <h3 className="mb-10 mt-5">Popular Movies</h3>
+      <div className="flex gap-y-5 overflow-scroll no-scrollbar	">
         {popularMoviesResponse.results.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
-      <h3>Popular Series</h3>
-      <div className="flex gap-y-5 overflow-scroll	">
+      <h3 className="mb-10 mt-5">Popular Series</h3>
+      <div className="flex gap-y-5 overflow-scroll no-scrollbar	">
         {popularTVSeriesResponse.results.map((series) => (
           <TVSeriesCard key={series.id} series={series} />
         ))}

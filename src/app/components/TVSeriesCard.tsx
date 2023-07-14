@@ -4,7 +4,7 @@ export type TVSeriesCardProps = {
   series: TVSeriesData;
 };
 
-export default function MovieCard({ series: { name, id, poster_path } }: TVSeriesCardProps) {
+export default function TVSeriesCard({ series: { name, id, poster_path } }: TVSeriesCardProps) {
   return (
     <>
       <div className="group mb-12 text-center">

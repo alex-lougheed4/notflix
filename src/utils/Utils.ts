@@ -10,13 +10,34 @@ export function sortMoviesByGenre(genreList: Genre[], movies: MovieData[]) {
   });
   return sortedMovieList;
 }
+export function sortTVSeriesByGenre(genreList: Genre[], series: TVSeriesData[]) {
+  let sortedSeriesList: TVSeriesByGenre[] = [];
 
-////for each genre in movieGenrees
-//movieGenres.map((genre) =>
-//  //filter movies into new array if the movie's genre_ids include the genre.id
-//  moviesByGenre.find(genre.name).push(
-//    movies.filter(function (movie) {
-//      if (movie.genre_ids.includes(genre.id)) return movie;
-//    })
-//  )
-//);
+  genreList.forEach(function (genre) {
+    const sortedSeries = series.filter(function (series) {
+      return series.genre_ids.includes(genre.id);
+    });
+    const temp = { genreName: genre.name, series: sortedSeries };
+    sortedSeriesList.push(temp);
+  });
+  return sortedSeriesList;
+}
+
+export function sortMoviesByLanguage(language: Language, movies: MovieData[]) {
+  const res = movies.filter(function (movie) {
+    return movie.original_language === language.iso_639_1;
+  });
+  return res;
+}
+
+export function checkIfLanguageHasMovies(languages: Language[], movies: MovieData[]) {
+  let res: Language[] = [];
+
+  languages.map((language) => {
+    const moviesByLanguage = sortMoviesByLanguage(language, movies);
+    if (moviesByLanguage.length > 0) {
+      res.push(language);
+    }
+  });
+  return res;
+}

@@ -1,20 +1,31 @@
-'use client';
-import { searchMovies } from '@/utils/DataFetch';
-import MovieCard from '../../components/MovieCard';
-import TVSeriesCard from '../../components/TVSeriesCard';
+import MovieCard from '@/app/components/MovieCard';
+import TVSeriesCard from '@/app/components/TVSeriesCard';
+import { searchMovies, searchSeries } from '@/utils/DataFetch';
 
 export type DetailProps = {
-  params: { data: string };
+  params: { detail: string };
 };
-export default async function Page({ params: { data } }: DetailProps) {
-  console.log(`In detail page: ${data}`);
-  const res = await searchMovies(data);
-  console.log(`res ${res}`);
+export default async function Page({ params }: DetailProps) {
+  //add sort dropdown? e.g release date, rating etc
+  const searchMovieResults = await searchMovies(params.detail as string);
+  const searchSeriesResults = await searchSeries(params.detail as string);
+  console.log(`movies res ${JSON.stringify(searchMovieResults)}`);
+  console.log(`series res ${JSON.stringify(searchSeriesResults)}`);
 
   return (
     <>
-      <h1>hello</h1>
-      <h3>{data}</h3>
+      <h3 className="mb-10 mt-5">Movie Results</h3>
+      <div className="flex gap-y-5 overflow-scroll no-scrollbar	">
+        {searchMovieResults.results.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
+      <h3 className="mb-10 mt-5">Series Results</h3>
+      <div className="flex gap-y-5 overflow-scroll no-scrollbar	">
+        {searchSeriesResults.results.map((series) => (
+          <TVSeriesCard key={series.id} series={series} />
+        ))}
+      </div>
     </>
   );
 }

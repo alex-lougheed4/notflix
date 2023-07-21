@@ -41,3 +41,10 @@ export function checkIfLanguageHasMovies(languages: Language[], movies: MovieDat
   });
   return res;
 }
+
+export function filterTrailer(data: VideoResponse) {
+  const res = data.results.filter((video) => {
+    return video.type === 'Trailer';
+  });
+  return res[0];
+}

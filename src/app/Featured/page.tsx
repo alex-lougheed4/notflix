@@ -10,7 +10,7 @@ export default async function Page() {
     <>
       <h3 className="mb-10 mt-5">Popular Movies</h3>
       <div className="flex gap-y-5 overflow-scroll no-scrollbar	">
-        {popularMoviesResponse.results.map((movie) => (
+        {popularMoviesResponse.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>

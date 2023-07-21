@@ -8,7 +8,7 @@ import MovieCard from './MovieCard';
 
 export type LanguageDropdownProps = {
   languages: Language[];
-  movies: MovieResponse;
+  movies: MovieData[];
 };
 
 function classNames(...classes: string[]) {
@@ -21,7 +21,7 @@ export default function LanguageDropdown({ languages, movies }: LanguageDropdown
     setLanguage(val);
   };
 
-  const moviesByLanguage: MovieData[] = sortMoviesByLanguage(language, movies.results);
+  const moviesByLanguage: MovieData[] = sortMoviesByLanguage(language, movies);
   return (
     <>
       <div className="flex">

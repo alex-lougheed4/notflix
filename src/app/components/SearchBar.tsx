@@ -16,9 +16,10 @@ export default function SearchBar() {
   return (
     <div className="mx-auto max-w-md">
       <form
-        onSubmit={() => {
+        onSubmit={(e) => {
+          e.preventDefault();
           console.log(`inSubmit: ${searchTerm}`);
-          router.push('/detail/' + searchTerm, { searchTerm });
+          router.push(`/detail/${searchTerm}`);
         }}
         className="relative mx-auto w-max"
       >

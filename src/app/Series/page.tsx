@@ -7,10 +7,13 @@ export default async function Page() {
   const seriesResponse = await getTopRatedTVSeriesData();
   const series = seriesResponse.results;
   const seriesByGenre: TVSeriesByGenre[] = sortTVSeriesByGenre(seriesGenres, series);
+  const filteredSeriesByGenre: TVSeriesByGenre[] = seriesByGenre.filter(function (series) {
+    return series.series.length > 0;
+  });
 
   return (
     <>
-      {seriesByGenre.map((genre) => (
+      {filteredSeriesByGenre.map((genre) => (
         <>
           <h3 className="mb-10 mt-5">{genre.genreName}</h3>
           <div className="flex gap-y-5 overflow-scroll no-scrollbar gap-x-5	">

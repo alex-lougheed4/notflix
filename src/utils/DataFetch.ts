@@ -1,8 +1,22 @@
 const API_KEY = '841bcb6cf60c8d3d4d5808816b600621';
 
 export async function getPopularMovieData() {
-  const data = await api<MovieResponse>(
-    'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
+  const data: MovieData[] = [];
+  for (let i = 1; i <= 5; i++) {
+    //maybe move into generic function to do all
+    const response = await api<MovieResponse>(
+      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=i'
+    );
+    console.log(`In Data fetch in loop ${JSON.stringify(response.results)}`);
+    data.push(...response.results);
+  }
+  console.log(`Data in fetch out of loop ${JSON.stringify(data)}`);
+  return data;
+}
+
+export async function getPopularTVSeriesData() {
+  const data = await api<TVSeriesResponse>(
+    'https://api.themoviedb.org/3/tv/popular?language=en-US&page=1'
   );
   return data;
 }
@@ -10,6 +24,12 @@ export async function getPopularMovieData() {
 export async function searchMovies(movieName: string) {
   const data = await api<MovieResponse>(
     `https://api.themoviedb.org/3/search/movie?query=${movieName}&include_adult=false&page=1`
+  );
+  return data;
+}
+export async function searchSeries(seriesName: string) {
+  const data = await api<TVSeriesResponse>(
+    `https://api.themoviedb.org/3/search/tv?query=${seriesName}&include_adult=false&page=1`
   );
   return data;
 }
@@ -28,13 +48,6 @@ export async function getTopRatedTVSeriesData() {
   return data;
 }
 
-export async function getPopularTVSeriesData() {
-  const data = await api<TVSeriesResponse>(
-    'https://api.themoviedb.org/3/tv/popular?language=en-US&page=1'
-  );
-  return data;
-}
-
 export async function getMovieGenres() {
   const data = await api<GenreList>('https://api.themoviedb.org/3/genre/movie/list?language=en');
   return data;
@@ -47,6 +60,16 @@ export async function getTVSeriesGenres() {
 
 export async function getLanguages() {
   const data = await api<Language[]>('https://api.themoviedb.org/3/configuration/languages');
+  return data;
+}
+
+export async function getMovieTrailer(movieId: number) {
+  const data = await api<VideoResponse>(`https://api.themoviedb.org/3/movie/${movieId}/videos`);
+  return data;
+}
+
+export async function getSeriesTrailer(seriesId: number) {
+  const data = await api<VideoResponse>(`https://api.themoviedb.org/3/tv/${seriesId}/videos`);
   return data;
 }
 

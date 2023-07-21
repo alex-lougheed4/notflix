@@ -26,17 +26,17 @@ export default function MovieCard({ movie }: MovieCardProps) {
   };
   const [detailShown, setDetailShown] = useState(emptyDetail);
   async function handleClick() {
-    console.log('poster click');
-    console.log(`Movie data: ${JSON.stringify(movie)}`);
+    //console.log('poster click');
+    //console.log(`Movie data: ${JSON.stringify(movie)}`);
     const movieTrailer: VideoData = filterTrailer(await getMovieTrailer(movie.id));
-    console.log(`${JSON.stringify(movieTrailer)} (trailer) in moviecard`);
+    //console.log(`${JSON.stringify(movieTrailer)} (trailer) in moviecard`);
     setDetailShown(movieTrailer);
   }
 
   const ref = useOutsideClick(() => {
-    console.log('Clicked outside of MyComponent');
+    //console.log('Clicked outside of MyComponent');
     setDetailShown(emptyDetail);
-    console.log(`In outside click handler ${detailShown.name}`);
+    //console.log(`In outside click handler ${detailShown.name}`);
   });
 
   useEffect(() => {

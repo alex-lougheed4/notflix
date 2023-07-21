@@ -9,8 +9,8 @@ export default async function Page({ params }: DetailProps) {
   //add sort dropdown? e.g release date, rating etc
   const searchMovieResults = await searchMovies(params.detail as string);
   const searchSeriesResults = await searchSeries(params.detail as string);
-  console.log(`movies res ${JSON.stringify(searchMovieResults)}`);
-  console.log(`series res ${JSON.stringify(searchSeriesResults)}`);
+  //console.log(`movies res ${JSON.stringify(searchMovieResults)}`);
+  //console.log(`series res ${JSON.stringify(searchSeriesResults)}`);
 
   return (
     <>

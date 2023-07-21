@@ -7,10 +7,10 @@ export async function getPopularMovieData() {
     const response = await api<MovieResponse>(
       'https://api.themoviedb.org/3/movie/popular?language=en-US&page=i'
     );
-    console.log(`In Data fetch in loop ${JSON.stringify(response.results)}`);
+    //console.log(`In Data fetch in loop ${JSON.stringify(response.results)}`);
     data.push(...response.results);
   }
-  console.log(`Data in fetch out of loop ${JSON.stringify(data)}`);
+  //console.log(`Data in fetch out of loop ${JSON.stringify(data)}`);
   return data;
 }
 

@@ -37,21 +37,21 @@ export default function TVSeriesCard({ series }: TVSeriesCardProps) {
   };
   const [detailShown, setDetailShown] = useState(emptyDetail);
   async function handleClick() {
-    console.log('poster click');
+    //console.log('poster click');
     const movieTrailer: VideoData = filterTrailer(await getSeriesTrailer(series.id));
-    console.log(`${JSON.stringify(movieTrailer)} in seriescard`);
+    //console.log(`${JSON.stringify(movieTrailer)} in seriescard`);
     if (movieTrailer.name != null) {
       setDetailShown(movieTrailer);
     } else {
       setDetailShown(errorDetail);
     }
-    console.log(`In click handler ${detailShown.name}`);
+    //console.log(`In click handler ${detailShown.name}`);
   }
 
   const ref = useOutsideClick(() => {
-    console.log('Clicked outside of MyComponent');
+    //console.log('Clicked outside of MyComponent');
     setDetailShown(emptyDetail);
-    console.log(`In outside click handler ${detailShown.name}`);
+    //console.log(`In outside click handler ${detailShown.name}`);
   });
 
   useEffect(() => {

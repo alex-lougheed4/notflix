@@ -1,4 +1,4 @@
-const API_KEY = '841bcb6cf60c8d3d4d5808816b600621';
+const API_KEY = process.env.MOVIE_DB_KEY;
 
 export async function getPopularMovieData() {
   const data: MovieData[] = [];

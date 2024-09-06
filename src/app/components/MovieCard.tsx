@@ -12,6 +12,8 @@ export type MovieCardProps = {
 
 //onClick get Video and call filterTrailer, pass movie and trailer into showing detailed Videoo Card
 export default function MovieCard({ movie }: MovieCardProps) {
+  const [data, setData] = useState<VideoResponse>();
+
   const emptyDetail = {
     iso_639_1: '',
     iso_3166_1: '',
@@ -26,25 +28,29 @@ export default function MovieCard({ movie }: MovieCardProps) {
   };
   const [detailShown, setDetailShown] = useState(emptyDetail);
   async function handleClick() {
-    //console.log('poster click');
-    //console.log(`Movie data: ${JSON.stringify(movie)}`);
-    const movieTrailer: VideoData = filterTrailer(await getMovieTrailer(movie.id));
-    //console.log(`${JSON.stringify(movieTrailer)} (trailer) in moviecard`);
-    setDetailShown(movieTrailer);
+    if (data) {
+      const movieTrailer: VideoData = filterTrailer(data);
+      setDetailShown(movieTrailer);
+    }
   }
 
   const ref = useOutsideClick(() => {
-    //console.log('Clicked outside of MyComponent');
     setDetailShown(emptyDetail);
-    //console.log(`In outside click handler ${detailShown.name}`);
   });
 
   useEffect(() => {
+    //don't like this
+    const fetchDataAsync = async () => {
+      const fetchedData = await getMovieTrailer(movie.id);
+      setData(fetchedData);
+    };
+
+    fetchDataAsync();
     const html = document.querySelector('html');
     if (html) {
       html.style.overflow = detailShown.name ? 'hidden' : 'auto';
     }
-  }, [detailShown]); // condition to watch to perform side effect
+  }, [detailShown, movie]); // condition to watch to perform side effect
 
   return (
     <>

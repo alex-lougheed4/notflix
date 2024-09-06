@@ -1,11 +1,9 @@
-const API_KEY = process.env.MOVIE_DB_KEY;
-
 export async function getPopularMovieData() {
   const data: MovieData[] = [];
   for (let i = 1; i <= 5; i++) {
     //maybe move into generic function to do all
     const response = await api<MovieResponse>(
-      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=i'
+      `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${i}&sort_by=popularity.desc`
     );
     //console.log(`In Data fetch in loop ${JSON.stringify(response.results)}`);
     data.push(...response.results);
@@ -65,6 +63,7 @@ export async function getLanguages() {
 
 export async function getMovieTrailer(movieId: number) {
   const data = await api<VideoResponse>(`https://api.themoviedb.org/3/movie/${movieId}/videos`);
+  console.log(data);
   return data;
 }
 
@@ -74,12 +73,17 @@ export async function getSeriesTrailer(seriesId: number) {
 }
 
 function api<T>(url: string): Promise<T> {
+  //DOESN'T WORK WHEN INDUCED CLIENT SIDE
+  const bearerToken = process.env.BEARER_TOKEN;
+
+  if (!bearerToken) {
+    throw new Error('Bearer token not found in .env.local');
+  }
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDFiY2I2Y2Y2MGM4ZDNkNGQ1ODA4ODE2YjYwMDYyMSIsInN1YiI6IjY0YTJkOTI1MTEzODZjMDBhZGM3YTI2MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gagQViwUcwujgKM4K5rkOXSWMktlZmSt9nb3mZvp3Sw',
+      Authorization: `Bearer ${bearerToken}`, //no playing nice with client side
     },
   };
   return fetch(url, options)
@@ -90,7 +94,6 @@ function api<T>(url: string): Promise<T> {
       return response.json() as Promise<{ data: T }>;
     })
     .then((data) => {
-      //console.log(data);
       return data as T;
     });
 }
